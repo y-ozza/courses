@@ -27,4 +27,16 @@ public class ContactHelper extends  HelperBase {
       click(By.linkText("add new"));
    }
 
+
+   public void deleteSelectedContact() {
+      wd.findElement(By.xpath("//div[@id='content']/form[2]/div[2]/input")).click();
+      wd.switchTo().alert().accept();
+   }
+
+   public void selectContact() {
+      if (!wd.findElement(By.id("7")).isSelected()) {
+         wd.findElement(By.id("7")).click();
+      }
+   }
+
 }

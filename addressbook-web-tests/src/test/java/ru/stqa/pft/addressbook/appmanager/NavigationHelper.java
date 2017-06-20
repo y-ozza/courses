@@ -21,4 +21,9 @@ public class NavigationHelper extends  HelperBase{
       wd.navigate().back();
    }
 
+   public void gotoHomePage() {
+      wd.findElement(By.xpath("//div/div[3]/ul/li[1]/a")).click();
+   }
+
+
 }
