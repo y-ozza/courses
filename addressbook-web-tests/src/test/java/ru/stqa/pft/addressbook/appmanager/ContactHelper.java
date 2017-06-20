@@ -39,4 +39,13 @@ public class ContactHelper extends  HelperBase {
       }
    }
 
+   public void initContactModification() {
+      wd.findElement(By.xpath("//table[@id='maintable']/tbody/tr[3]/td[8]/a/img")).click();
+
+   }
+
+   public void submitContactModification() {
+      click(By.name("update"));
+
+   }
 }
