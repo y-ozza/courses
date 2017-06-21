@@ -34,9 +34,13 @@ public class ContactHelper extends  HelperBase {
    }
 
    public void selectContact() {
-      if (!wd.findElement(By.id("7")).isSelected()) {
-         wd.findElement(By.id("7")).click();
+//      if (!wd.findElement(By.id("7")).isSelected()) {
+//         wd.findElement(By.id("7")).click();
+      if (!wd.findElement(By.name("selected[]")).isSelected()) {
+         click(By.name("selected[]"));
       }
+
+ //  }
    }
 
    public void initContactModification() {
