@@ -39,7 +39,7 @@ public class ApplicationManager {
        else if (browser.equals(BrowserType.OPERA_BLINK)) {
           wd = new OperaDriver();
        }
-      wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+      wd.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
       wd.get("http://localhost:8081/addressbook/");
       groupHelper = new GroupHelper(wd);
       navigationHelper = new NavigationHelper(wd);
