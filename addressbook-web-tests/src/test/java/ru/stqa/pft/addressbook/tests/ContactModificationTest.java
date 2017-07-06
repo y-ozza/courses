@@ -1,10 +1,8 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.Comparator;
 import java.util.List;
@@ -13,9 +11,9 @@ import java.util.List;
  * Created by shurik on 20.06.2017.
  */
 public class ContactModificationTest extends TestBase {
-   @Test
+   @Test (enabled = false)
    public void ContactModificationTest() {
-      app.getNavigationHelper().gotoHomePage();
+      app.goTo().gotoHomePage();
 
       if (!app.getContactHelper().isThereAContact()) {
          app.getContactHelper().createContact(new ContactData(null, null, null, null, null));
@@ -25,7 +23,7 @@ public class ContactModificationTest extends TestBase {
       app.getContactHelper().initContactModification();
       app.getContactHelper().fillContacrForm(new ContactData("firstName_n", "lastName_n", "Address_n", "111-11-11", null), false);
       app.getContactHelper().submitContactModification();
-      app.getNavigationHelper().gotoHomePage();
+      app.goTo().gotoHomePage();
       List<ContactData> after = app.getContactHelper().getContactList();
       before.remove(0);
       before.add(new ContactData(rId, "firstName_n", "lastName_n", "Address_n", "111-11-11", null));
