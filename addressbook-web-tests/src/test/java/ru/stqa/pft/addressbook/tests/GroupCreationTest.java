@@ -20,8 +20,18 @@ public class GroupCreationTest extends TestBase {
         Set<GroupData> after = app.group().all();
         Assert.assertEquals(after.size(), before.size()+1);
 
-        before.add(group);
         group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
+        before.add(group);
+        for(GroupData g: before) {
+            System.out.println(g.toString() + ": " + g.hashCode());
+            System.out.println(after.contains(g));
+        }
+        for(GroupData g: after) {
+            System.out.println(g.toString() + ": " + g.hashCode());
+            System.out.println(before.contains(g));
+        }
+        System.out.println(before.equals(after));
+        System.out.println(before.containsAll(after));
         Assert.assertEquals(before, after);
 
 //        int maxId_old = 0;
