@@ -38,7 +38,7 @@ public class GroupCreationTest extends TestBase {
         BufferedReader reader = new BufferedReader(new FileReader((new File("src/test/resources/groups.xml"))));
         String xml = "";
         String line = reader.readLine();
-        while ( line != null) {
+        while (line !=null) {
             xml+=line;
             line = reader.readLine();
         }

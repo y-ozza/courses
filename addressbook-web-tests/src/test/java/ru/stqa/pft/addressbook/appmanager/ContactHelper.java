@@ -30,9 +30,9 @@ public class ContactHelper extends  HelperBase {
       type(By.name("lastname"),contactData.getLastName()  );
       type(By.name("address"),contactData.getAddress());
       type(By.name("home"),contactData.getHome());
-      attach(By.name("photo"), contactData.getPhoto());
+//      attach(By.name("photo"), contactData.getPhoto());
       if (creation) {
-        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("test11");
+        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText("test1");
       }
       else {
          Assert.assertFalse(isElementPresent(By.name("new_group")));
