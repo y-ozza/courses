@@ -1,12 +1,14 @@
 <list>
-  <group>
-    <name>groupname 0</name>
-    <header>header 0</header>
-    <footer>footer 0</footer>
-  </group>
-  <group>
-    <name>groupname 1</name>
-    <header>header 1</header>
-    <footer>footer 1</footer>
-  </group>
+  <contact>
+    <firstName>fname0</firstName>
+    <lastName>lname0</lastName>
+    <home>110</home>
+    <email>email@0</email>
+  </contact>
+  <contact>
+    <firstName>fname1</firstName>
+    <lastName>lname1</lastName>
+    <home>111</home>
+    <email>email@1</email>
+  </contact>
 </list>
