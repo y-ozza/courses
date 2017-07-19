@@ -49,6 +49,7 @@ public class ContactCreationTest  extends TestBase{
 //        Assert.assertEquals(before, after);
 //
 
+        app.goTo().gotoHomePage();
         Contacts before = app.contact().all();
 //        File photo = new File("src/test/resources/sample.png");
 //        ContactData newContact = new ContactData().withFirstName("firstName").withLastName("lastName").withAddress("Address").withHomePhone("111-11-11")
