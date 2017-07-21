@@ -50,13 +50,13 @@ public class ContactCreationTest  extends TestBase{
 //
 
         app.goTo().gotoHomePage();
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();                           //.contact().all(); список контактов через web
 //        File photo = new File("src/test/resources/sample.png");
 //        ContactData newContact = new ContactData().withFirstName("firstName").withLastName("lastName").withAddress("Address").withHomePhone("111-11-11")
 //                .withPhoto(photo);
 //        app.contact().createContact(newContact);
         app.contact().createContact(contact);
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
         int a = 0;
         assertThat(after.size(), equalTo(before.size()+1));
         assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));

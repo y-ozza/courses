@@ -18,19 +18,20 @@ public class ContactModificationTest extends TestBase {
    @Test (enabled = true)
    public void ContactModificationTest() {
       app.goTo().gotoHomePage();
+      Contacts before = app.db().contacts();
 
-      if (!app.contact().isThereAContact()) {
-         app.contact().createContact(new ContactData().withFirstName("firstName").withLastName("lastName").withAddress("Address").withHomePhone("111-11-11"));
+      if (before.size()==0) { //!app.contact().isThereAContact()) {
+         app.contact().createContact(new ContactData().withFirstName("firstName").withLastName("lastName").withEmail("Email").withHomePhone("111-11-11").withMobilePhone("222"));
       }
-      Contacts before = app.contact().all();
   //    int rId = before.get(0).getId();
       ContactData modifiedContact = before.iterator().next();
-      ContactData newContact = new ContactData().withFirstName("firstName").withLastName("lastName").withAddress("Address").withHomePhone("111-11-11");
+      ContactData newContact = new ContactData().withId(modifiedContact.getId()).withFirstName("firstName").withLastName("lastName").withEmail("Email")
+              .withHomePhone("111-11-11").withMobilePhone("222");
       app.contact().initContactModificationById(modifiedContact.getId()); //!!
       app.contact().fillContacrForm(newContact, false);
       app.contact().submitContactModification();
       app.goTo().gotoHomePage();
-      Contacts after = app.contact().all();
+      Contacts after = app.db().contacts();
       assertThat(after, equalTo(before.without(modifiedContact).withAdded(newContact)));
 
 

@@ -17,3 +17,4 @@ sandbox/gradle/wrapper/gradle-wrapper.jar
 sandbox/gradle/wrapper/gradle-wrapper.properties
 sandbox/gradlew
 sandbox/gradlew.bat
+*.log

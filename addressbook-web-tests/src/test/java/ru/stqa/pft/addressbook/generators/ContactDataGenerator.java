@@ -63,7 +63,7 @@ public  static  void  main(String[] args) throws IOException {
    private List<ContactData> generateContacts() {
       List<ContactData> list = new ArrayList<ContactData>();
       for (int i = 0; i<count; i++) {
-         list.add(new ContactData().withFirstName("fname"+i).withLastName("lname"+i).withEmail("email@"+i).withHomePhone("11"+i));
+         list.add(new ContactData().withFirstName("fname"+i).withLastName("lname"+i).withEmail("email@"+i).withHomePhone("11"+i).withMobilePhone("22"+i));
       }
       return  list;
    }

@@ -19,10 +19,19 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Created by shurik on 20.06.2017.
  */
 public class GroupModificationTest extends  TestBase{
+
    @BeforeMethod
+
    public  void  ensurePreconditions() {
-      app.goTo().GroupPage();
-      if (app.group().all().size()==0) {
+      //старая версия - проверка через web
+//      app.goTo().GroupPage();
+//      if (app.group().all().size()==0) {
+//         app.group().create(new GroupData().withName("test1"));
+//      }
+
+
+      if (app.db().groups().size()==0) {
+        app.goTo().GroupPage();
          app.group().create(new GroupData().withName("test1"));
       }
 
@@ -30,17 +39,19 @@ public class GroupModificationTest extends  TestBase{
 
    @Test
    public void testGroupModification() {
-      Groups before = app.group().all();
+      Groups before = app.db().groups();
       GroupData modifiedGroup = before.iterator().next();
       GroupData group = new GroupData().withId(modifiedGroup.getId()).withName("test11").withHeader("test22").withFooter("test33");
+      app.goTo().GroupPage();
       app.group().modify(group);
       assertThat(app.group().count(), equalTo(before.size()));
-      Groups after = app.group().all();
- //     Assert.assertEquals(before.size(), after.size()); замена - хеширование
-
+      Groups after = app.db().groups();
       assertThat(after, equalTo(before.without(modifiedGroup).withAdded(group)));
    }
 
-
+//      Groups before = app.group().all();  через web - медленно
+//      assertThat(app.group().count(), equalTo(before.size()));
+//      Groups after = app.group().all();
+   //     Assert.assertEquals(before.size(), after.size()); замена - хеширование
 
 }

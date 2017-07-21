@@ -16,13 +16,13 @@ public class ContactDeletionTest extends TestBase {
     @Test (enabled = true)
     public void ContactDeletionTest() {
         app.goTo().gotoHomePage();
-        Contacts before = app.contact().all();
-        if (!app.contact().isThereAContact()) {
+        Contacts before = app.db().contacts();
+        if (before.size()==0) {///!app.contact().isThereAContact()) {
             app.contact().createContact(new ContactData().withFirstName("firstName").withLastName("lastName").withAddress("Address").withHomePhone("111-11-11"));
         }
         ContactData deletedContact = before.iterator().next();
         app.contact().delete(deletedContact);
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
         Assert.assertEquals(after.size(), before.size() - 1);
         assertThat(after, equalTo(before.without(deletedContact)));
 
