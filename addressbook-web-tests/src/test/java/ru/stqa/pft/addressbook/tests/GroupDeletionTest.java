@@ -31,6 +31,7 @@ public class GroupDeletionTest extends TestBase {
  //       Assert.assertEquals(after.size(), before.size()-1); замена - хеширование
 
        assertThat(after, equalTo(before.without(deletedGroup)));
+        verifyGroupListInUI();
     }
 
 

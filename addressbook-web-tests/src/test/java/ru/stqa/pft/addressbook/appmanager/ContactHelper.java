@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,7 +57,7 @@ public class ContactHelper extends  HelperBase {
       returnToContactPage();
    }
 
-   public void selectContact() {
+   public void selectContact() {   //выбор первого контакта на странице
       if (!wd.findElement(By.name("selected[]")).isSelected()) {
          click(By.name("selected[]"));
       }
@@ -163,5 +164,14 @@ public class ContactHelper extends  HelperBase {
       return new ContactData().withFirstName(firstName).withLastName(lastName).withHomePhone(home).withWorkPhone(work).withMobilePhone(mobile)
               .withEmail(email).withEmail2(email2).withEmail3(email3).withAddress(address);
 
+   }
+
+   public void selectGroup(GroupData groupToSelect) {
+      new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(groupToSelect.getName());
+
+   }
+
+   public void addToSelectedGroup() {
+      click(By.name("add"));
    }
 }

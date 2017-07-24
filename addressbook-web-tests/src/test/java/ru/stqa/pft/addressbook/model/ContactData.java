@@ -7,6 +7,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @XStreamAlias("contact")
 @Entity
@@ -50,6 +52,14 @@ public class ContactData {
    private  String email3;
    @Transient
    private  String allEmails;
+   @Column(name = "photo")
+   @Type(type = "text")
+   private String photo;
+   @ManyToMany(fetch = FetchType.EAGER)
+   @JoinTable(name = "address_in_groups",
+           joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+   private Set<GroupData> groups = new HashSet<GroupData>();
+
 
    @Override
    public boolean equals(Object o) {
@@ -86,12 +96,6 @@ public class ContactData {
               '}';
    }
 
-   @Column(name = "photo")
-   @Type(type = "text")
-   private String photo;
-   @Transient
-   private  String group;
-
    public ContactData(String firstName, String lastName, String address, String home, String mobile, String work, String group) {
       this.id = Integer.MAX_VALUE;
       this.firstName = firstName;
@@ -100,7 +104,6 @@ public class ContactData {
       this.home = home;
       this.mobile = mobile;
       this.work = work;
-      this.group = group;
    }
    public ContactData(int id, String firstName, String lastName, String address, String home,  String mobile, String work, String group) {
       this.id = id;
@@ -110,7 +113,6 @@ public class ContactData {
       this.home = home;
       this.mobile = mobile;
       this.work = work;
-      this.group = group;
    }
 
    public ContactData() {
@@ -145,9 +147,6 @@ public class ContactData {
       return work;
    }
 
-   public String getGroup() {
-      return group;
-   }
 
    public String getAllPhones() {
       return allPhones;
@@ -240,10 +239,12 @@ public class ContactData {
       return  this;
    }
 
-
-
-   public ContactData withGroup(String group) {
-      this.group = group;
-      return this;
+   public Groups getGroups() {
+      return new Groups(groups);
    }
+
+   //   public ContactData withGroup(String group) {
+//      this.group = group;
+//      return this;
+//   }
 }
