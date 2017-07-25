@@ -7,7 +7,6 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
@@ -50,7 +49,7 @@ public class ContactAddToGroupTest extends TestBase {
 
       app.goTo().gotoHomePage();
       app.contact().selectContactById(modifiedContact.getId());
-      app.contact().selectGroup(groupToSelect);
+      app.contact().selectGroupToAdd(groupToSelect);
       app.contact().addToSelectedGroup();
 
 //    проверка
@@ -71,4 +70,53 @@ public class ContactAddToGroupTest extends TestBase {
 
    }
 
+   @Test
+   public  void testContacDeleteFromGroup() {
+      Contacts beforeContacts = app.db().contacts();
+      if (beforeContacts.size() == 0) {
+         app.goTo().gotoHomePage();
+         app.contact().createContact(new ContactData().withFirstName("firstName").withLastName("lastName").withAddress("Address").withHomePhone("111-11-11"));
+      }
+      if (app.db().groups().isEmpty()) {
+         app.goTo().GroupPage();
+         app.group().create(new GroupData().withName("gName").withFooter("gFooter").withHeader("gHeader"));
+      }
+      Groups beforeGroups = app.db().groups();
+      ContactData modifiedContact = beforeContacts.iterator().next();
+      Groups addedGroupsBefore = modifiedContact.getGroups();
+      if (addedGroupsBefore.size() == 0) {
+         app.goTo().gotoHomePage();
+         app.contact().selectContactById(modifiedContact.getId());
+         app.contact().selectGroupToAdd(beforeGroups.iterator().next());
+         app.contact().addToSelectedGroup();
+      }
+      addedGroupsBefore = modifiedContact.getGroups();
+      GroupData groupToRemove = addedGroupsBefore.iterator().next();
+      app.goTo().gotoHomePage();
+      app.contact().selectContactById(modifiedContact.getId());
+      app.contact().selectGroupToRemove(groupToRemove);
+      app.contact().deleteFromGroup();
+
+
+
+//    проверка
+      Contacts modifiedContactFromBase = app.db().getContactByID(modifiedContact.getId());
+      Groups addedGroupsAfter = null;
+      for (ContactData c : modifiedContactFromBase) { //здесь один контакт
+         addedGroupsAfter = c.getGroups();
+         Boolean groupIsRemoved = true;
+         for (GroupData g : addedGroupsAfter) {
+            if (g.getName().equals(groupToRemove.getName())) { //потому что при добавлении в web-интерфейсе группа выбирается ПО ИМЕНИ!!!!
+               groupIsRemoved = false;
+               break;
+            }
+         }
+         Assert.assertTrue(groupIsRemoved);
+
+      }
+
+   }
+
+
 }
+
