@@ -93,8 +93,8 @@ public class ContactAddToGroupTest extends TestBase {
       addedGroupsBefore = modifiedContact.getGroups();
       GroupData groupToRemove = addedGroupsBefore.iterator().next();
       app.goTo().gotoHomePage();
-      app.contact().selectContactById(modifiedContact.getId());
       app.contact().selectGroupToRemove(groupToRemove);
+      app.contact().selectContactById(modifiedContact.getId());
       app.contact().deleteFromGroup();
 
 
