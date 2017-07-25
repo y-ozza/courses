@@ -7,6 +7,9 @@ import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 
 /**
  * Created by shurik on 24.07.2017.
@@ -20,26 +23,22 @@ public class ContactAddToGroupTest extends TestBase {
          app.goTo().gotoHomePage();
          app.contact().createContact(new ContactData().withFirstName("firstName").withLastName("lastName").withAddress("Address").withHomePhone("111-11-11"));
       }
-      Groups beforeGroups = app.db().groups();
-      if (beforeGroups.size() == 0) {
+      if (app.db().groups().isEmpty()) {
          app.goTo().GroupPage();
          app.group().create(new GroupData().withName("gName").withFooter("gFooter").withHeader("gHeader"));
       }
+      Groups beforeGroups = app.db().groups();
       ContactData modifiedContact = beforeContacts.iterator().next();
       GroupData groupToSelect = null;
-      Groups addedGroups = modifiedContact.getGroups();
-      if (addedGroups.size() == 0) {
+      Groups addedGroupsBefore = modifiedContact.getGroups();
+      if (addedGroupsBefore.size() == 0) {
          groupToSelect = beforeGroups.iterator().next();
       } else {
          for (GroupData currentGroup : beforeGroups) {
-            groupToSelect = currentGroup;
-            for (GroupData addedGroup : addedGroups) {
-               if (groupToSelect.equals(addedGroup)) {
-                  groupToSelect = null;
-                  break;
-               }
+            if(!addedGroupsBefore.contains(currentGroup)) {
+               groupToSelect = currentGroup;
+               break;
             }
-            if (groupToSelect != null) break;
          }
       }
       if (groupToSelect == null) {
@@ -56,18 +55,19 @@ public class ContactAddToGroupTest extends TestBase {
 
 //    проверка
       Contacts modifiedContactFromBase = app.db().getContactByID(modifiedContact.getId());
-      for (ContactData c : modifiedContactFromBase) {
-         addedGroups = c.getGroups();
+      Groups addedGroupsAfter = null;
+      for (ContactData c : modifiedContactFromBase) { //здесь один контакт
+         addedGroupsAfter = c.getGroups();
          Boolean groupIsAdded = false;
-         for (GroupData g : addedGroups) {
-            if (g.getName().equals(groupToSelect.getName()))
-               groupIsAdded = true;  //потому что в тесте группа выбирается ПО ИМЕНИ!!!!
+         for (GroupData g : addedGroupsAfter) {
+            if (g.getName().equals(groupToSelect.getName())) { //потому что при добавлении в web-интерфейсе группа выбирается ПО ИМЕНИ!!!!
+               groupIsAdded = true;
+               break;
+            }
          }
-         System.out.println("Группа добавлена? " + groupIsAdded + "!!!");
-
+         Assert.assertTrue(groupIsAdded);
 
       }
-
 
    }
 
