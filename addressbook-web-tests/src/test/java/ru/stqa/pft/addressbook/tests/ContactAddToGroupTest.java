@@ -83,24 +83,27 @@ public class ContactAddToGroupTest extends TestBase {
       }
       Groups beforeGroups = app.db().groups();
       ContactData modifiedContact = beforeContacts.iterator().next();
+      int modifiedID = modifiedContact.getId();
       Groups addedGroupsBefore = modifiedContact.getGroups();
       if (addedGroupsBefore.size() == 0) {
          app.goTo().gotoHomePage();
-         app.contact().selectContactById(modifiedContact.getId());
+         app.contact().selectContactById(modifiedID);
          app.contact().selectGroupToAdd(beforeGroups.iterator().next());
          app.contact().addToSelectedGroup();
       }
-      addedGroupsBefore = modifiedContact.getGroups();
+      Contacts modifiedContactFromBase = app.db().getContactByID(modifiedID); //вот здесь исправила
+      for (ContactData c : modifiedContactFromBase) {
+         addedGroupsBefore = c.getGroups();
+         break;
+      }
       GroupData groupToRemove = addedGroupsBefore.iterator().next();
       app.goTo().gotoHomePage();
       app.contact().selectGroupToRemove(groupToRemove);
-      app.contact().selectContactById(modifiedContact.getId());
+      app.contact().selectContactById(modifiedID);
       app.contact().deleteFromGroup();
 
-
-
 //    проверка
-      Contacts modifiedContactFromBase = app.db().getContactByID(modifiedContact.getId());
+      modifiedContactFromBase = app.db().getContactByID(modifiedID);
       Groups addedGroupsAfter = null;
       for (ContactData c : modifiedContactFromBase) { //здесь один контакт
          addedGroupsAfter = c.getGroups();
