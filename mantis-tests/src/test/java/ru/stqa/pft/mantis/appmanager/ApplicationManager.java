@@ -7,6 +7,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.BrowserType;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -55,4 +56,18 @@ public class ApplicationManager {
       wd.quit();
    }
 
+   public ru.stqa.pft.mantis.appmanager.HttpSession newSession() {
+      return  new ru.stqa.pft.mantis.appmanager.HttpSession(this);
+   }
+
+   public String getProperty(String key) {
+
+      return properties.getProperty(key);
+   }
+
+
 }
+
+
+
+
