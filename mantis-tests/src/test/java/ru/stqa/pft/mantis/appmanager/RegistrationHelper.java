@@ -16,7 +16,7 @@ public class RegistrationHelper extends  HelperBase{
 
    public void start(String username, String email) {
 
-      wd.get("http://localhost:8081/mantisbt-1.2.19/"+"/signup_page.php");
+      wd.get(app.getProperty("web.baseUrl")+"/signup_page.php");
       type(By.name("username"), username);
       type(By.name("email"), email);
       click(By.cssSelector("input[value='Signup']"));
@@ -33,7 +33,7 @@ public class RegistrationHelper extends  HelperBase{
 
 
    public void goToUsersPage() {
-      wd.get("http://localhost:8081/mantisbt-1.2.19/");
+      wd.get(app.getProperty("web.baseUrl"));
       type(By.name("username"), "administrator");
       type(By.name("password"), "root");
       click(By.cssSelector("input[value='Login']"));

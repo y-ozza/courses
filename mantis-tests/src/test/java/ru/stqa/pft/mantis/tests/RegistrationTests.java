@@ -43,8 +43,8 @@ public class RegistrationTests extends  TestBase {
       app.registration().resetPassword(user);
       List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
       String confirmationLink = findConfirmationLink(mailMessages, user.get("email"));
-      app.registration().finish(confirmationLink, "password");
-      Assert.assertTrue(app.newSession().login(user.get("username"), "password"));
+      app.registration().finish(confirmationLink, "password1");
+      Assert.assertTrue(app.newSession().login(user.get("username"), "password1"));
    }
 
    public HashMap<String, String> getUserFromBase() {
